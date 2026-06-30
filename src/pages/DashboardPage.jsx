@@ -1,5 +1,7 @@
 import KPICard from '../components/Dashboard/KPICard'
 import StageChart from '../components/Dashboard/StageChart'
+import ScoreBandChart from '../components/Dashboard/ScoreBandChart'
+import UrgentActions from '../components/Dashboard/UrgentActions'
 import RecentActivity from '../components/Dashboard/RecentActivity'
 import { SkeletonCard } from '../components/UI/Skeleton'
 
@@ -82,15 +84,21 @@ export default function DashboardPage({ contacts, loading }) {
         </div>
       )}
 
-      {/* Charts + Activity */}
+      {/* Score Band + Stage Charts */}
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-4">
+        <div className="xl:col-span-2">
+          <ScoreBandChart contacts={contacts} />
+        </div>
         <div className="xl:col-span-3">
           <StageChart contacts={contacts} />
         </div>
-        <div className="xl:col-span-2">
-          <RecentActivity contacts={contacts} />
-        </div>
       </div>
+
+      {/* Urgent Actions */}
+      <UrgentActions contacts={contacts} />
+
+      {/* Recent Activity */}
+      <RecentActivity contacts={contacts} />
     </div>
   )
 }
