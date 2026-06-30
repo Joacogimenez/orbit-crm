@@ -25,7 +25,8 @@ export default function StageChart({ contacts }) {
   return (
     <div className="card p-5">
       <h3 className="text-sm font-semibold text-slate-300 mb-4">Contactos por Stage</h3>
-      <ResponsiveContainer width="100%" height={200}>
+      <div className="h-48 sm:h-56">
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} barSize={32} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
           <XAxis
@@ -48,6 +49,7 @@ export default function StageChart({ contacts }) {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
+      </div>
     </div>
   )
 }

@@ -5,7 +5,7 @@ export default function PipelineColumn({ stage, contacts, onMoveStage }) {
   const totalValue = contacts.reduce((sum, c) => sum + (c.value || 0), 0)
 
   return (
-    <div className="flex flex-col min-w-[260px] max-w-[260px] bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
+    <div className="flex flex-col min-w-[85vw] sm:min-w-[260px] max-w-[260px] bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
       {/* Column Header */}
       <div className="px-4 py-3 border-b border-slate-800">
         <div className="flex items-center justify-between mb-1">
@@ -25,7 +25,7 @@ export default function PipelineColumn({ stage, contacts, onMoveStage }) {
       </div>
 
       {/* Cards */}
-      <div className="flex-1 p-3 space-y-3 overflow-y-auto max-h-[calc(100vh-220px)]">
+      <div className="flex-1 p-3 space-y-3 overflow-y-auto max-h-[calc(100vh-180px)] lg:max-h-[calc(100vh-220px)]">
         {contacts.length === 0 ? (
           <div className="flex items-center justify-center h-24 border-2 border-dashed border-slate-800 rounded-lg">
             <p className="text-xs text-slate-600">Sin contactos</p>

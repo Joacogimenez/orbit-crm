@@ -8,7 +8,7 @@ export default function KPICard({ icon, label, value, subValue, accent = false }
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-sm text-slate-400 truncate">{label}</p>
-        <p className={`text-2xl font-semibold mt-0.5 ${accent ? 'text-indigo-300' : 'text-slate-100'} font-mono`}>
+        <p className={`text-xl sm:text-2xl font-semibold mt-0.5 ${accent ? 'text-indigo-300' : 'text-slate-100'} font-mono`}>
           {value}
         </p>
         {subValue && (

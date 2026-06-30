@@ -15,12 +15,13 @@ import ContactDetailPage from './pages/ContactDetailPage'
 import { useContacts } from './hooks/useContacts'
 
 function AppLayout({ children, onNewContact }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   return (
     <div className="min-h-screen bg-slate-950">
-      <Sidebar />
-      <Header onNewContact={onNewContact} />
-      <main className="ml-64 pt-16 min-h-screen">
-        <div className="p-6">
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <Header onNewContact={onNewContact} onMenuClick={() => setSidebarOpen(true)} />
+      <main className="lg:ml-64 pt-16 min-h-screen">
+        <div className="p-4 sm:p-6">
           {children}
         </div>
       </main>

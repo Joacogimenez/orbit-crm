@@ -51,8 +51,8 @@ export default function ContactsList({ contacts, loading }) {
   return (
     <div className="space-y-4">
       {/* Filters */}
-      <div className="flex flex-wrap gap-3">
-        <div className="relative flex-1 min-w-[200px]">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3">
+        <div className="relative min-w-0 w-full sm:flex-1">
           <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
@@ -67,7 +67,7 @@ export default function ContactsList({ contacts, loading }) {
         <select
           value={stageFilter}
           onChange={(e) => setStageFilter(e.target.value)}
-          className="input w-auto min-w-[140px]"
+          className="input w-full sm:w-auto sm:min-w-[120px]"
         >
           <option value="">Todos los stages</option>
           {STAGES.map((s) => (
@@ -77,7 +77,7 @@ export default function ContactsList({ contacts, loading }) {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="input w-auto min-w-[160px]"
+          className="input w-full sm:w-auto sm:min-w-[130px]"
         >
           <option value="date_desc">Más recientes</option>
           <option value="date_asc">Más antiguos</option>
