@@ -7,7 +7,24 @@ import { SkeletonRow } from '../UI/Skeleton'
 
 const STAGES = ['Lead', 'Contactado', 'Propuesta', 'Cerrado', 'Perdido']
 
-export default function ContactsList({ contacts, loading }) {
+function ScoreBadge({ score, isScoring }) {
+  if (isScoring) {
+    return (
+      <svg className="w-4 h-4 animate-spin text-slate-400 inline" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+      </svg>
+    )
+  }
+  if (score == null) return <span className="text-slate-500 font-mono text-sm">—</span>
+  let cls = 'text-xs font-mono font-semibold px-1.5 py-0.5 rounded '
+  if (score >= 70) cls += 'bg-emerald-500/20 text-emerald-400'
+  else if (score >= 40) cls += 'bg-amber-500/20 text-amber-400'
+  else cls += 'bg-red-500/20 text-red-400'
+  return <span className={cls}>{score}</span>
+}
+
+export default function ContactsList({ contacts, loading, onScoreContact, scoringIds }) {
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
   const [stageFilter, setStageFilter] = useState('')
@@ -96,6 +113,7 @@ export default function ContactsList({ contacts, loading }) {
                 <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3">Nombre</th>
                 <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3 hidden md:table-cell">Empresa</th>
                 <th className="text-left text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3">Stage</th>
+                <th className="text-center text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3 hidden sm:table-cell">Score</th>
                 <th className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3 hidden sm:table-cell">Valor</th>
                 <th className="text-right text-xs font-medium text-slate-500 uppercase tracking-wider px-4 py-3 hidden lg:table-cell">Fecha</th>
               </tr>
@@ -104,12 +122,12 @@ export default function ContactsList({ contacts, loading }) {
               {loading ? (
                 [...Array(6)].map((_, i) => (
                   <tr key={i}>
-                    <td colSpan={5}><SkeletonRow /></td>
+                    <td colSpan={6}><SkeletonRow /></td>
                   </tr>
                 ))
               ) : filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-12 text-slate-500 text-sm">
+                  <td colSpan={6} className="text-center py-12 text-slate-500 text-sm">
                     {search || stageFilter ? 'Sin resultados para tu búsqueda' : 'Sin contactos aún'}
                   </td>
                 </tr>
@@ -134,6 +152,9 @@ export default function ContactsList({ contacts, loading }) {
                     </td>
                     <td className="px-4 py-3">
                       <Badge stage={contact.stage} />
+                    </td>
+                    <td className="px-4 py-3 text-center hidden sm:table-cell">
+                      <ScoreBadge score={contact.score} isScoring={scoringIds?.has(contact.id)} />
                     </td>
                     <td className="px-4 py-3 text-right hidden sm:table-cell">
                       <span className="text-sm font-mono text-slate-300">

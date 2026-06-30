@@ -13,6 +13,7 @@ import ContactsPage from './pages/ContactsPage'
 import ContactDetailPage from './pages/ContactDetailPage'
 
 import { useContacts } from './hooks/useContacts'
+import { useLeadScoring } from './hooks/useLeadScoring'
 
 function AppLayout({ children, onNewContact }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -31,14 +32,20 @@ function AppLayout({ children, onNewContact }) {
 
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false)
-  const { contacts, loading, error, addContact, updateStage, updateNotes, deleteContact, updateContact, STAGES, fetchContacts } = useContacts()
+  const { contacts, loading, error, addContact, updateStage, updateNotes, deleteContact, updateContact, patchContact, STAGES, fetchContacts } = useContacts()
+  const { scoreContact, scoringIds } = useLeadScoring()
 
-  const handleAddContact = async (data) => {
-    await addContact(data)
-    setModalOpen(false)
+  const handleScoreContact = (contact) => {
+    scoreContact(contact, patchContact)
   }
 
-  const sharedProps = { contacts, loading, error, updateStage, updateNotes, deleteContact, updateContact, STAGES, fetchContacts }
+  const handleAddContact = async (data) => {
+    const newContact = await addContact(data)
+    setModalOpen(false)
+    if (newContact) handleScoreContact(newContact)
+  }
+
+  const sharedProps = { contacts, loading, error, updateStage, updateNotes, deleteContact, updateContact, STAGES, fetchContacts, onScoreContact: handleScoreContact, scoringIds }
 
   return (
     <BrowserRouter>

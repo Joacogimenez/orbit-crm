@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import ContactDetail from '../components/Contacts/ContactDetail'
 import Skeleton from '../components/UI/Skeleton'
 
-export default function ContactDetailPage({ contacts, loading, updateNotes, deleteContact, updateStage }) {
+export default function ContactDetailPage({ contacts, loading, updateNotes, deleteContact, updateStage, onScoreContact, scoringIds }) {
   const { id } = useParams()
   const contact = contacts.find((c) => String(c.id) === id)
 
@@ -39,6 +39,8 @@ export default function ContactDetailPage({ contacts, loading, updateNotes, dele
       onUpdateNotes={updateNotes}
       onDelete={deleteContact}
       onUpdateStage={updateStage}
+      onScoreContact={onScoreContact}
+      isScoring={scoringIds?.has(contact.id) ?? false}
     />
   )
 }

@@ -4,7 +4,16 @@ import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import Badge from '../UI/Badge'
 
-export default function ContactDetail({ contact, onUpdateNotes, onDelete, onUpdateStage }) {
+function ScoreDisplay({ score }) {
+  if (score == null) return <span className="text-3xl font-mono font-bold text-slate-500">—</span>
+  let cls = 'text-3xl font-mono font-bold '
+  if (score >= 70) cls += 'text-emerald-400'
+  else if (score >= 40) cls += 'text-amber-400'
+  else cls += 'text-red-400'
+  return <span className={cls}>{score}<span className="text-lg text-slate-500">/100</span></span>
+}
+
+export default function ContactDetail({ contact, onUpdateNotes, onDelete, onUpdateStage, onScoreContact, isScoring }) {
   const navigate = useNavigate()
   const [notes, setNotes] = useState(contact.notes || '')
   const [saving, setSaving] = useState(false)
@@ -140,6 +149,50 @@ export default function ContactDetail({ contact, onUpdateNotes, onDelete, onUpda
             </p>
           </div>
         )}
+      </div>
+
+      {/* Lead Score */}
+      <div className="card p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-semibold text-slate-300">Lead Score</h3>
+          <button
+            onClick={() => onScoreContact && onScoreContact(contact)}
+            disabled={isScoring || !onScoreContact}
+            className="btn-ghost text-xs px-3 py-1.5 flex items-center gap-1.5 disabled:opacity-50"
+          >
+            {isScoring ? (
+              <>
+                <svg className="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Calculando...
+              </>
+            ) : (
+              <>
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Recalcular score
+              </>
+            )}
+          </button>
+        </div>
+        <div className="flex items-start gap-6">
+          <ScoreDisplay score={contact.score} />
+          <div className="flex-1 min-w-0">
+            {contact.score_reasoning ? (
+              <p className="text-slate-400 text-sm leading-relaxed">{contact.score_reasoning}</p>
+            ) : (
+              <p className="text-slate-600 text-sm">Sin análisis disponible. Presiona "Recalcular score" para generar uno.</p>
+            )}
+            {contact.last_score_update && (
+              <p className="text-xs text-slate-600 mt-2">
+                Actualizado {format(new Date(contact.last_score_update), "d MMM yyyy 'a las' HH:mm", { locale: es })}
+              </p>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Notes */}

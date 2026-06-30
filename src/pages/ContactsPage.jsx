@@ -1,6 +1,6 @@
 import ContactsList from '../components/Contacts/ContactsList'
 
-export default function ContactsPage({ contacts, loading }) {
+export default function ContactsPage({ contacts, loading, onScoreContact, scoringIds }) {
   return (
     <div className="space-y-6 max-w-7xl">
       <div>
@@ -9,7 +9,7 @@ export default function ContactsPage({ contacts, loading }) {
           {contacts.length} contacto{contacts.length !== 1 ? 's' : ''} en total
         </p>
       </div>
-      <ContactsList contacts={contacts} loading={loading} />
+      <ContactsList contacts={contacts} loading={loading} onScoreContact={onScoreContact} scoringIds={scoringIds} />
     </div>
   )
 }

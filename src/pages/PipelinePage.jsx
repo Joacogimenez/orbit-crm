@@ -1,7 +1,7 @@
 import Pipeline from '../components/Pipeline/Pipeline'
 import { SkeletonCard } from '../components/UI/Skeleton'
 
-export default function PipelinePage({ contacts, loading, updateStage }) {
+export default function PipelinePage({ contacts, loading, updateStage, onScoreContact, scoringIds }) {
   return (
     <div className="space-y-6">
       <div>
@@ -24,7 +24,7 @@ export default function PipelinePage({ contacts, loading, updateStage }) {
           ))}
         </div>
       ) : (
-        <Pipeline contacts={contacts} onMoveStage={updateStage} />
+        <Pipeline contacts={contacts} onMoveStage={updateStage} onScoreContact={onScoreContact} scoringIds={scoringIds} />
       )}
     </div>
   )

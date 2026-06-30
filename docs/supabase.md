@@ -90,3 +90,7 @@ VITE_SUPABASE_KEY=<anon-public-key>
 ```
 
 Las claves `anon` son seguras de exponer en el frontend cuando RLS está habilitado.
+
+## Seguridad — Claude API Key
+
+`VITE_ANTHROPIC_KEY` se expone en el bundle del frontend (visible en DevTools). Esto es aceptable para demos y uso personal, pero **no para producción con usuarios externos**. En producción, mover las llamadas a Claude a un backend seguro (Edge Function de Supabase, Next.js API route, etc.) para que la clave nunca llegue al cliente.

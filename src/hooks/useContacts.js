@@ -110,6 +110,12 @@ export function useContacts() {
     }
   }, [])
 
+  const patchContact = useCallback((id, updates) => {
+    setContacts((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, ...updates } : c))
+    )
+  }, [])
+
   const updateContact = useCallback(async (id, updates) => {
     try {
       const { data, error } = await supabase
@@ -141,6 +147,7 @@ export function useContacts() {
     updateNotes,
     deleteContact,
     updateContact,
+    patchContact,
     STAGES,
   }
 }

@@ -1,7 +1,7 @@
 import { STAGE_DOT_COLORS } from '../UI/Badge'
 import ContactCard from './ContactCard'
 
-export default function PipelineColumn({ stage, contacts, onMoveStage }) {
+export default function PipelineColumn({ stage, contacts, onMoveStage, onScoreContact, scoringIds }) {
   const totalValue = contacts.reduce((sum, c) => sum + (c.value || 0), 0)
 
   return (
@@ -36,6 +36,8 @@ export default function PipelineColumn({ stage, contacts, onMoveStage }) {
               key={contact.id}
               contact={contact}
               onMoveStage={onMoveStage}
+              onScoreContact={onScoreContact}
+              scoringIds={scoringIds}
             />
           ))
         )}
