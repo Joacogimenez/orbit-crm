@@ -62,6 +62,17 @@ export default function ContactCard({ contact, onMoveStage, onScoreContact, scor
         </p>
       )}
 
+      {/* Suggested Action */}
+      {contact.suggested_action && !isScoring && (
+        <div
+          className="flex items-start gap-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-lg px-2 py-1 mb-2"
+          title={contact.suggested_action}
+        >
+          <span className="text-xs flex-shrink-0 mt-px">💡</span>
+          <span className="text-xs text-indigo-300 truncate">{contact.suggested_action.slice(0, 40)}{contact.suggested_action.length > 40 ? '…' : ''}</span>
+        </div>
+      )}
+
       {/* Company */}
       {contact.company && (
         <p className="text-xs text-slate-500 mb-3 truncate">{contact.company}</p>

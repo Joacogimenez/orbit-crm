@@ -186,6 +186,15 @@ export default function ContactDetail({ contact, onUpdateNotes, onDelete, onUpda
             ) : (
               <p className="text-slate-600 text-sm">Sin análisis disponible. Presiona "Recalcular score" para generar uno.</p>
             )}
+            {contact.suggested_action && (
+              <div className="flex items-start gap-2 bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-3 mt-3">
+                <span className="text-sm flex-shrink-0">💡</span>
+                <div>
+                  <p className="text-xs font-medium text-indigo-300 mb-1">Próxima acción recomendada</p>
+                  <p className="text-slate-300 text-sm leading-relaxed">{contact.suggested_action}</p>
+                </div>
+              </div>
+            )}
             {contact.last_score_update && (
               <p className="text-xs text-slate-600 mt-2">
                 Actualizado {format(new Date(contact.last_score_update), "d MMM yyyy 'a las' HH:mm", { locale: es })}

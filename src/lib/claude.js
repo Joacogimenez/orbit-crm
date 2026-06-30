@@ -23,12 +23,12 @@ Contact data:
 
 Stages in order: Lead → Contactado → Propuesta → Cerrado → Perdido
 
-Respond ONLY with valid JSON, no other text. Write the reasoning in Spanish:
-{"score": <number 0-100>, "reasoning": "<explicación de 1-2 oraciones en español>"}`
+Respond ONLY with valid JSON, no other text. Write all text fields in Spanish:
+{"score": <number 0-100>, "reasoning": "<explicación de 1-2 oraciones en español>", "suggested_action": "<acción concreta de 1-2 líneas en español basada en stage, inactividad y score>"}`
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 256,
+    max_tokens: 400,
     messages: [{ role: 'user', content: prompt }],
   })
 
@@ -40,5 +40,5 @@ Respond ONLY with valid JSON, no other text. Write the reasoning in Spanish:
     throw new Error('Invalid score value from Claude')
   }
 
-  return { score: Math.round(parsed.score), reasoning: parsed.reasoning }
+  return { score: Math.round(parsed.score), reasoning: parsed.reasoning, suggested_action: parsed.suggested_action }
 }

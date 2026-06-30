@@ -15,6 +15,7 @@ export function useLeadScoring() {
       const scoreData = {
         score: result.score,
         score_reasoning: result.reasoning,
+        suggested_action: result.suggested_action,
         last_score_update: new Date().toISOString(),
       }
 
