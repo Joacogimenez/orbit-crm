@@ -23,8 +23,8 @@ Contact data:
 
 Stages in order: Lead → Contactado → Propuesta → Cerrado → Perdido
 
-Respond ONLY with valid JSON, no other text:
-{"score": <number 0-100>, "reasoning": "<1-2 sentence explanation>"}`
+Respond ONLY with valid JSON, no other text. Write the reasoning in Spanish:
+{"score": <number 0-100>, "reasoning": "<explicación de 1-2 oraciones en español>"}`
 
   const message = await client.messages.create({
     model: 'claude-haiku-4-5-20251001',
@@ -32,7 +32,8 @@ Respond ONLY with valid JSON, no other text:
     messages: [{ role: 'user', content: prompt }],
   })
 
-  const text = message.content[0].text.trim()
+  const raw = message.content[0].text.trim()
+  const text = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '')
   const parsed = JSON.parse(text)
 
   if (typeof parsed.score !== 'number' || parsed.score < 0 || parsed.score > 100) {
